@@ -3,18 +3,13 @@ const characterList = document.getElementById("character-list");
 const Loading = document.getElementById("loading");
 const radioButtons = document.querySelectorAll('input[name="character"]');
 
-const baseUrl = "https://ihatov08.github.io/kimetsu_api/api/";
-const classification = {
-  hasira: "hashira.json",
-  oni: "oni.json",
-  kisatsutai: "kisatsutai.json",
-  all: "all.json",
-};
+const BASE_URL = "https://ihatov08.github.io";
+const API_URL =  `${BASE_URL}/kimetsu_api/api`;
 
 async function fetchCharacters(category) {
   showLoading(true);
   try {
-    const response = await fetch(`${baseUrl}${classification[category]}`);
+    const response = await fetch(`${API_URL}${category}.json`);
     const data = await response.json();
     console.log(data);
     displayCharacters(data);
@@ -32,7 +27,7 @@ function displayCharacters(data) {
     card.className = "card";
     card.innerHTML = `
       <h3>${char.name}</h3>
-      <img src="https://ihatov08.github.io${char.image}" alt="${char.name}">
+      <img src="${BASE_URL}${char.image}" alt="${char.name}">
       <p>カテゴリ: ${char.category}</p>
     `;
     characterDisplay.appendChild(card);
@@ -52,5 +47,5 @@ function showLoading(toggle) {
     Loading.style.display = "none";
   }
 }
-fetchCharacters("all");
+fetchCharacters("/all");
 
